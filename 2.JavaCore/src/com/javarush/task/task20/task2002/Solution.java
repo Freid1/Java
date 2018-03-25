@@ -66,11 +66,23 @@ public class Solution {
         public List<User> users = new ArrayList<>();
 
         public void save(OutputStream outputStream) throws Exception {
-            //implement this method - реализуйте этот метод
+            for (int i = 0; i < users.size(); i++) {
+                outputStream.write(String.valueOf(users.size()).getBytes());
+                outputStream.write(" ".getBytes());
+                outputStream.write(users.get(i).getFirstName().getBytes());
+                outputStream.write(" ".getBytes());
+                outputStream.write(users.get(i).getLastName().getBytes());
+                outputStream.write(" ".getBytes());
+                outputStream.write(users.get(i).getBirthDate().toString().getBytes());
+                outputStream.write(" ".getBytes());
+                outputStream.write((users.get(i).isMale()?"yes":"no").getBytes());
+                outputStream.write(" ".getBytes());
+                outputStream.write((users.get(i).getCountry().getDisplayedName().getBytes()));
+           }
         }
 
         public void load(InputStream inputStream) throws Exception {
-            //implement this method - реализуйте этот метод
+
         }
 
         @Override

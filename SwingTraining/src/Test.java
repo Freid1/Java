@@ -1,20 +1,40 @@
-import java.io.FileNotFoundException;
+import java.util.Scanner;
 
-
+/*
+Знакомство с properties
+*/
 public class Test {
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
 
-        for (int i = 0; i <100; i++) {
-            System.out.println("Максим привет!!!!!!!!!!!!!!!!!!!!!!!!! ");
+        int number;
 
+        Scanner in = new Scanner(System.in);
+
+        System.out.println("Enter a positive integer");
+        number = in.nextInt();
+
+        if (number < 0) {
+            System.out.println("Error: Not a positive integer");
+        } else {
+
+            System.out.print("Convert to binary is:");
+            //System.out.print(binaryform(number));
+            printBinaryform(number);
         }
-
-
-
-
     }
 
+    private static void printBinaryform(int number) {
+        int remainder;
 
+        if (number <= 1) {
+            System.out.print(number);
+            return;   // KICK OUT OF THE RECURSION
+        }
 
+        remainder = number % 2;
+        printBinaryform(number >> 1);
+        System.out.print(remainder);
+    }
 }
+
 

@@ -1,12 +1,16 @@
 package com.javarush.task.task20.task2002;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+        import java.io.*;
+        import java.sql.Date;
+        import java.util.ArrayList;
+        import java.util.List;
 
-/* 
+/*
 Читаем и пишем в файл: JavaRush
+Читаем и пишем в файл: JavaRush
+Реализуйте логику записи в файл и чтения из файла для класса JavaRush.
+В файле your_file_name.tmp может быть несколько объектов JavaRush.
+Метод main реализован только для вас и не участвует в тестировании.
 */
 public class Solution {
     public static void main(String[] args) {
@@ -17,37 +21,12 @@ public class Solution {
             OutputStream outputStream = new FileOutputStream(your_file_name);
             InputStream inputStream = new FileInputStream(your_file_name);
 
-            User first = new User();
-            first.setFirstName("Vasy");
-            first.setLastName("Pupkin");
-            first.setBirthDate(new Date(2015, 5, 10));
-            first.setMale(true);
-            first.setCountry(User.Country.RUSSIA);
-
-            User second = new User();
-            second.setFirstName("Masha");
-            second.setLastName("Pupkina");
-            second.setBirthDate(new Date(2017, 7, 11));
-            second.setMale(false);
-            second.setCountry(User.Country.RUSSIA);
-
             JavaRush javaRush = new JavaRush();
-            javaRush.users.add(first);
-            javaRush.users.add(second);
-
-
-            //    JavaRush javaRush1=new JavaRush();
-            //   javaRush1.users.add(second);
-
+            //initialize users field for the javaRush object here - инициализируйте поле users для объекта javaRush тут
             javaRush.save(outputStream);
-            //     javaRush1.save(outputStream);
-
             outputStream.flush();
-
             JavaRush loadedObject = new JavaRush();
             loadedObject.load(inputStream);
-
-            System.out.println(javaRush.equals(loadedObject));
             //check here that javaRush object equals to loadedObject object - проверьте тут, что javaRush и loadedObject равны
 
             outputStream.close();
@@ -66,23 +45,73 @@ public class Solution {
         public List<User> users = new ArrayList<>();
 
         public void save(OutputStream outputStream) throws Exception {
-            for (int i = 0; i < users.size(); i++) {
-                outputStream.write(String.valueOf(users.size()).getBytes());
-                outputStream.write(" ".getBytes());
-                outputStream.write(users.get(i).getFirstName().getBytes());
-                outputStream.write(" ".getBytes());
-                outputStream.write(users.get(i).getLastName().getBytes());
-                outputStream.write(" ".getBytes());
-                outputStream.write(users.get(i).getBirthDate().toString().getBytes());
-                outputStream.write(" ".getBytes());
-                outputStream.write((users.get(i).isMale()?"yes":"no").getBytes());
-                outputStream.write(" ".getBytes());
-                outputStream.write((users.get(i).getCountry().getDisplayedName().getBytes()));
-           }
+            PrintWriter writer = new PrintWriter(outputStream);
+            for (User us : users) {
+                writer.println(us.getFirstName());
+                writer.println(us.getLastName());
+                writer.println(us.getBirthDate().getTime());
+                writer.println(us.isMale());
+                writer.println(us.getCountry());//implement this method - реализуйте этот метод
+            }
+            writer.close();
+            outputStream.flush();
+
         }
 
         public void load(InputStream inputStream) throws Exception {
 
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            // int i=0;
+            String line;
+            while ((line = reader.readLine()) != null) {
+//firstName
+                String firstName = line;
+
+//lastName
+                String lastName = reader.readLine();
+
+//Date
+                String date = reader.readLine();
+                Long longdate = Long.parseLong(date);
+                Date BirthDate = new Date(longdate);
+
+//Sex
+                String sex = reader.readLine();
+                boolean isTrue = true;
+                if (sex.equals("true"))
+                    isTrue = true;
+                if (sex.equals("false"))
+                    isTrue = false;
+
+//Country
+                String country = reader.readLine();
+                User.Country enumCountry = null;
+                switch (country) {
+                    case "UKRAINE":
+                        enumCountry = User.Country.UKRAINE;
+                        break;
+                    case "RUSSIA":
+                        enumCountry = User.Country.RUSSIA;
+                        break;
+                    case "OTHER":
+                        enumCountry = User.Country.OTHER;
+                        break;
+                }
+
+//Create new User
+                User user = new User();
+
+//Put data to a new User
+                user.setFirstName(firstName);
+                user.setLastName(lastName);//implement this method - реализуйте этот метод
+                user.setBirthDate(BirthDate);
+                user.setMale(isTrue);
+                user.setCountry(enumCountry);
+
+//add user to users list
+                users.add(user);
+            }
+            reader.close();
         }
 
         @Override

@@ -1,11 +1,5 @@
-import com.sun.java.swing.plaf.motif.MotifBorders;
-
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.plaf.basic.BasicBorders;
-import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
-import javax.swing.plaf.synth.SynthLookAndFeel;
 import java.awt.*;
 
 public class ClassNew {
@@ -43,6 +37,9 @@ public class ClassNew {
 
 
         jFrame.setVisible(true);
+
+
+
     }
 
 }

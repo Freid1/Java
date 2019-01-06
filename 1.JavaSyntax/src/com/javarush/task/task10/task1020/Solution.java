@@ -2,9 +2,6 @@ package com.javarush.task.task10.task1020;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 
 /* 
 Задача по алгоритмам
@@ -19,7 +16,7 @@ public class Solution {
         }
 
         sort(array);
-        HashSet
+
 
         System.out.println(array[9]);
         System.out.println(array[10]);
